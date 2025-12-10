@@ -11,6 +11,7 @@ def get_book_by_id(db: Session, book_id: int):
 
 def create_book(db: Session, book: dict):
     new_book = Book(**book)
+
     db.add(new_book)
     db.commit()
     db.refresh(new_book)
@@ -35,9 +36,14 @@ def delete_book(db: Session, book_id: int):
     book = get_book_by_id(db, book_id)
     if not book:
         return None
+
+    linked_anime = db.query(Anime).filter(Anime.book_id == book_id).first()
+    if linked_anime:
+        return False
+
     db.delete(book)
     db.commit()
-    return book
+    return True
 
 # CRUD of anime
 
@@ -52,6 +58,7 @@ def get_anime_by_book_id(db: Session, book_id: int):
 
 def create_anime(db: Session, anime: dict):
     new_anime = Anime(**anime)
+
     db.add(new_anime)
     db.commit()
     db.refresh(new_anime)
@@ -74,6 +81,10 @@ def delete_anime(db: Session, anime_id: int):
     anime = get_anime_by_id(db, anime_id)
     if not anime:
         return None
+
+    if anime.book_id is not None:
+        return False
+
     db.delete(anime)
     db.commit()
-    return anime
+    return True

@@ -16,16 +16,11 @@ class Book(Base):
 
 
 class Anime(Base):
-     __tablename__ = "anime"
+    __tablename__ = "anime"
 
-     id = Column(Integer, primary_key=True, index=True)
-     title = Column(String, nullable=False)
-     studio = Column(String, nullable=False)
-     genre = Column(String, nullable=False)
-     year = Column(Integer, nullable=False)
-     book_id = Column(
-         Integer,
-         ForeignKey("books.id"),
-         unique=True,
-         nullable=True,
-     )
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    studio = Column(String, nullable=False)
+    genre = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    book_id = Column(Integer, ForeignKey("books.id"), unique=True, nullable=True)
