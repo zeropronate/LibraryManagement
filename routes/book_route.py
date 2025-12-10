@@ -4,11 +4,13 @@ from sql.database import get_db
 
 book_router = APIRouter(prefix="/book", tags=["books"])
 
+
 @book_router.get("/", summary="List all books")
-def list_all(db = Depends(get_db)):
+def list_all_book(db = Depends(get_db)):
     return list_book(db)
 
-@book_router.get("/{book_id}",)
+
+@book_router.get("/{book_id}", summary="Get book by ID")
 def single_book(book_id: int,db = Depends(get_db)):
     book = get_book(db, book_id)
     if book:
@@ -16,9 +18,11 @@ def single_book(book_id: int,db = Depends(get_db)):
     else:
         return {"error": "Book not found"}
 
+
 @book_router.post("/", summary="Create a new book")
 def add_book(data: dict,db = Depends(get_db)):
     return create_book(db,data)
+
 
 @book_router.put("/{book_id}", summary="Update a book")
 def modify_book(book_id: int, data: dict,db = Depends(get_db)):
@@ -33,10 +37,6 @@ def modify_book(book_id: int, data: dict,db = Depends(get_db)):
 def remove_book(book_id: int,db = Depends(get_db)):
     deleted = delete_book(db, book_id)
     if deleted:
-        return {"message": "Book deleted successfully"}
+        return {"message": "Book is deleted successfully"}
     else:
         return {"error": "Book not found"}
-
-
-
-
