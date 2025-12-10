@@ -1,30 +1,33 @@
 from sqlalchemy.orm import Session
 from .models import Book, Anime
 
+
+
 # CRUD of book
 
 def get_all_book(db: Session):
     return db.query(Book).all()
 
+
 def get_book_by_id(db: Session, book_id: int):
     return db.query(Book).filter(Book.id == book_id).first()
 
-def create_book(db: Session, book: dict):
-    new_book = Book(**book)
+
+def create_book(db: Session, book_data: dict):
+    new_book = Book(**book_data)
 
     db.add(new_book)
     db.commit()
     db.refresh(new_book)
     return new_book
 
-def update_book(db: Session, book_id: int, data: dict):
+
+def update_book(db: Session, book_id: int, book_data: dict):
     existing_book = get_book_by_id(db, book_id)
+
     if not existing_book:
         return None
-
-    # apply only keys provided in the incoming data dict
-    for key, value in data.items():
-        # avoid setting attributes that don't exist on the model
+    for key, value in book_data.items():
         if hasattr(existing_book, key):
             setattr(existing_book, key, value)
 
@@ -32,44 +35,57 @@ def update_book(db: Session, book_id: int, data: dict):
     db.refresh(existing_book)
     return existing_book
 
+
 def delete_book(db: Session, book_id: int):
     book = get_book_by_id(db, book_id)
+
     if not book:
         return None
-
-    linked_anime = db.query(Anime).filter(Anime.book_id == book_id).first()
-    if linked_anime:
-        return False
+    linked_anime = db.query(Anime).filter(Anime.book_id == book_id).all()
+    for anime in linked_anime:
+        anime.book_id = None
 
     db.delete(book)
     db.commit()
     return True
+
+
 
 # CRUD of anime
 
 def get_all_anime(db: Session):
     return db.query(Anime).all()
 
+
 def get_anime_by_id(db: Session, anime_id: int):
     return db.query(Anime).filter(Anime.id == anime_id).first()
+
 
 def get_anime_by_book_id(db: Session, book_id: int):
     return db.query(Anime).filter(Anime.book_id == book_id).first()
 
-def create_anime(db: Session, anime: dict):
-    new_anime = Anime(**anime)
 
+def create_anime(db: Session, anime_data: dict):
+    book_id = anime_data.get("book_id")
+
+    if book_id is not None:
+        linked_book = db.query(Anime).filter(Anime.book_id == book_id).first()
+        if linked_book:
+            return None
+
+    new_anime = Anime(**anime_data)
     db.add(new_anime)
     db.commit()
     db.refresh(new_anime)
     return new_anime
 
-def update_anime(db: Session, anime_id: int, data: dict):
+
+def update_anime(db: Session, anime_id: int, anime_data: dict):
     existing_anime = get_anime_by_id(db, anime_id)
+
     if not existing_anime:
         return None
-
-    for key, value in data.items():
+    for key, value in anime_data.items():
         if hasattr(existing_anime, key):
             setattr(existing_anime, key, value)
 
@@ -77,11 +93,12 @@ def update_anime(db: Session, anime_id: int, data: dict):
     db.refresh(existing_anime)
     return existing_anime
 
+
 def delete_anime(db: Session, anime_id: int):
     anime = get_anime_by_id(db, anime_id)
+
     if not anime:
         return None
-
     if anime.book_id is not None:
         return False
 
