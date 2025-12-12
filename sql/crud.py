@@ -61,6 +61,11 @@ def get_anime_by_id(db: Session, anime_id: int):
 def create_anime(db: Session, anime_data: dict):
     book_id = anime_data.get("book_id")
 
+    if book_id is not None:
+        existing = db.query(Anime).filter(Anime.book_id == book_id).first()
+        if existing:
+            return None
+
     new_anime = Anime(**anime_data)
     db.add(new_anime)
     db.commit()
