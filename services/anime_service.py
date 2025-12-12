@@ -10,10 +10,6 @@ def get_anime(db: Session, anime_id: int):
     return crud.get_anime_by_id(db, anime_id)
 
 
-def get_anime_by_book_id(db: Session, book_id: int):
-    return crud.get_anime_by_book_id(db, book_id)
-
-
 def create_anime(db: Session, anime_data: dict):
     return crud.create_anime(db, anime_data)
 

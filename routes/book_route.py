@@ -39,4 +39,4 @@ def remove_book(book_id: int, db=Depends(get_db)):
 
     if deleted is None:
         raise HTTPException(status_code=404, detail="Book not found")
-    return {"message": "Book is deleted successfully (any linked annime is now unlinked)"}
+    return {"message": "Book is deleted successfully"}

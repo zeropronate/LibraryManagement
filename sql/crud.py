@@ -41,13 +41,10 @@ def delete_book(db: Session, book_id: int):
 
     if not book:
         return None
-    linked_anime = db.query(Anime).filter(Anime.book_id == book_id).all()
-    for anime in linked_anime:
-        anime.book_id = None
 
     db.delete(book)
     db.commit()
-    return True
+    return book
 
 
 
@@ -61,17 +58,8 @@ def get_anime_by_id(db: Session, anime_id: int):
     return db.query(Anime).filter(Anime.id == anime_id).first()
 
 
-def get_anime_by_book_id(db: Session, book_id: int):
-    return db.query(Anime).filter(Anime.book_id == book_id).first()
-
-
 def create_anime(db: Session, anime_data: dict):
     book_id = anime_data.get("book_id")
-
-    if book_id is not None:
-        linked_book = db.query(Anime).filter(Anime.book_id == book_id).first()
-        if linked_book:
-            return None
 
     new_anime = Anime(**anime_data)
     db.add(new_anime)
@@ -99,9 +87,7 @@ def delete_anime(db: Session, anime_id: int):
 
     if not anime:
         return None
-    if anime.book_id is not None:
-        return False
 
     db.delete(anime)
     db.commit()
-    return True
+    return anime

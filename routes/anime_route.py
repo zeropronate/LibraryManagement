@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from services.anime_service import list_anime, get_anime, create_anime, update_anime, delete_anime, get_anime_by_book_id
+from services.anime_service import list_anime, get_anime, create_anime, update_anime, delete_anime
 from sql.database import get_db
 
 anime_router = APIRouter(prefix="/anime", tags=["anime"])
@@ -19,16 +19,7 @@ def single_anime(anime_id: int, db=Depends(get_db)):
     return anime
 
 
-@anime_router.get("{book_id}", summary="Get anime by book ID")
-def get_anime_from_book(book_id: int, db=Depends(get_db)):
-    anime = get_anime_by_book_id(db, book_id)
-
-    if not anime:
-        raise HTTPException(status_code=404, detail="No anime linked with this book")
-    return anime
-
-
-@anime_router.post("/", summary="Create an new anime")
+@anime_router.post("/", summary="Create a new anime")
 def add_anime(anime_data: dict, db=Depends(get_db)):
     new_anime = create_anime(db, anime_data)
 
@@ -52,6 +43,4 @@ def remove_anime(anime_id: int, db=Depends(get_db)):
 
     if deleted is None:
         raise HTTPException(status_code=404, detail="Anime not found")
-    elif deleted is False:
-        raise HTTPException(status_code=400, detail="Cannot delete anime because it is linked with a book. Unlink it first")
     return {"message": "Anime is deleted successfully"}

@@ -10,7 +10,6 @@
       <change beforePath="$PROJECT_DIR$/routes/anime_route.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/anime_route.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/book_route.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/book_route.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/anime_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/anime_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/book_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/book_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql/crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql/models.py" afterDir="false" />
     </list>
@@ -109,7 +108,8 @@
       <workItem from="1765119894366" duration="10487000" />
       <workItem from="1765344009430" duration="12697000" />
       <workItem from="1765393335956" duration="4531000" />
-      <workItem from="1765398527314" duration="5520000" />
+      <workItem from="1765398527314" duration="6080000" />
+      <workItem from="1765543742541" duration="10213000" />
     </task>
     <servers />
   </component>

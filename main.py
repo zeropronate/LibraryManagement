@@ -8,7 +8,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# 🛠️ Create tables in the PostgresSQL database on startup
+# 🛠️ Create tables in the PostgreSQL database on startup
 Base.metadata.create_all(bind=engine)
 
 

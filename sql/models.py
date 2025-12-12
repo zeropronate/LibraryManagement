@@ -23,4 +23,4 @@ class Anime(Base):
     studio = Column(String, nullable=False)
     genre = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
-    book_id = Column(Integer, ForeignKey("books.id", ondelete="SET NULL"), unique=True, nullable=True)
+    book_id = Column(Integer, ForeignKey("books.id"), nullable=True)

@@ -1,0 +1,13 @@
+when book of genre x is created automatically created anime of genre x is created 
+if book is created of type genre y, 3 type of genre y is created in anime order will be 0,1,2...  
+default anime order 0, 
+
+condition:
+when anime of genre x is deleted 
+but when we deleted all 3 anime of y then y's book will be deleted
+one-to-many relationship
+
+logging
+table column created date, updated date 
+
+single api method that shows all books and anime that exist in our db
