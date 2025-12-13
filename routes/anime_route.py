@@ -30,6 +30,14 @@ def add_anime(anime_data: dict, db=Depends(get_db)):
 
 @anime_router.put("/{anime_id}", summary="Update an anime")
 def modify_anime(anime_id: int, anime_data: dict, db=Depends(get_db)):
+    if "imdb_rating" in anime_data:
+        try:
+            rating = float(anime_data["imdb_rating"])
+            if rating < 0 or rating > 10:
+                raise HTTPException(status_code=400, detail="Rating must be between 0-10")
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid rating format")
+
     updated_anime = update_anime(db, anime_id, anime_data)
 
     if not updated_anime:

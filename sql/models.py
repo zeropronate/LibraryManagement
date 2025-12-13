@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from .database import Base
 
-COLUMNS = ["id", "title", "author", "genre", "year", "available"]
+BOOK_COLUMNS = ["id", "title", "author", "genre", "year", "available"]
 
+ANIME_COLUMNS = ["id", "title", "studio", "genre", "year", "book_id", "imdb_rating", "episodes_no", "available"]
 
 class Book(Base):
     __tablename__ = "books"
@@ -24,3 +25,6 @@ class Anime(Base):
     genre = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=True)
+    imdb_rating = Column(Integer, nullable=True)
+    episodes_no = Column(Integer, nullable=True)
+    available = Column(Boolean, default=True)
