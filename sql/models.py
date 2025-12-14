@@ -22,7 +22,7 @@ class Anime(Base):
     id = Column(Integer, primary_key=True, index=True)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=True)
     production_house = Column(String, nullable=True)
-    episodes_no = Column(String, nullable=True)
+    episodes_no = Column(Integer, nullable=True)
     genre = Column(String, nullable=True)
     year = Column(Integer, nullable=True)
     imdb_rating = Column(Float, nullable=True)       # ratings are not boolean

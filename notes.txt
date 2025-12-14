@@ -1,0 +1,3 @@
+anime should be linked to book always
+if book is deleted then anime should be deleted too
+if anime is deleted then book should be deleted too
