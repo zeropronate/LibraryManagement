@@ -27,7 +27,7 @@ def update_anime(db: Session, anime_id: int, anime_update_data: dict):
             raise HTTPException(status_code=404, detail="Anime not found")
 
         book = anime.book
-        updated_aval_book = 0
+        updated_aval_book = None
 
         if rating < 5:              # book's available status becomes false if rating is below 5
             if book:
@@ -39,7 +39,7 @@ def update_anime(db: Session, anime_id: int, anime_update_data: dict):
             if anime.episodes is not None:          # if rating is above 8, increase no of episodes by 100%
                 anime_update_data["episodes"] = anime.episodes * 2
 
-        if updated_aval_book:
+        if updated_aval_book and book:
             crud.update_book_by_id(db, book.id, updated_aval_book)
 
     return crud.update_anime_by_id(db, anime_id, anime_update_data)
