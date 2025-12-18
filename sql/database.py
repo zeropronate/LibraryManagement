@@ -13,6 +13,7 @@ SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
 Base = declarative_base()
 
+
 # <-- Fix: Add this -->
 def get_db():
     db = SessionLocal()
@@ -20,4 +21,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
